@@ -57,7 +57,7 @@ cache:
 before_install:
   # beanstald installation
     - nvm install node
-    - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/beanstalkd.sh | bash
+    - curl -s https://raw.githubusercontent.com/phalconslayer/framework/master/build/ci/beanstalkd.sh | bash
 
 before_script:
   - composer self-update
