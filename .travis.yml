@@ -86,7 +86,7 @@ script:
 
   # call brood console commands
   - curl -s https://raw.githubusercontent.com/phalconslayer/framework/1.4/build/ci/script.sh | bash
-after_success:
+before_deploy:
   - curl -s https://raw.githubusercontent.com/cyberhck/semantic-release-poc/${TRAVIS_BRANCH}/.docker/release/semantic-release.sh | bash
 # branches:
 #   only:
