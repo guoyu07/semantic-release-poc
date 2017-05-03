@@ -63,7 +63,7 @@ before_script:
   - rm composer.lock
   - composer require phalconslayer/framework:1.4.x-dev
   - composer require techpivot/phalcon-ci-installer:~1.0
-  - composer update
+  - composer install
   - cp vendor/phalconslayer/framework/tests/.env.travis .env
   - mkdir config/travis
   - vendor/bin/install-phalcon.sh ${PHALCON_VERSION}
