@@ -1,0 +1,6 @@
+/vendor/
+.env
+.php_cs.cache
+!.idea/inspectionProfiles/*.xml
+!.idea/runConfigurations/*.xml
+!.idea/codeStyleSettings.xml

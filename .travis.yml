@@ -1,0 +1,82 @@
+language: php
+
+sudo: true
+
+services:
+  - mysql
+
+matrix:
+  include:
+
+    # PHP5.6
+    - php: 5.6
+      env: PHALCON_VERSION="3.2.x" SLAYER_VERSION="dev"
+    - php: 5.6
+      env: PHALCON_VERSION="3.1.x" SLAYER_VERSION="dev"
+    - php: 5.6
+      env: PHALCON_VERSION="3.0.x" SLAYER_VERSION="dev"
+
+    # PHP7.0
+    - php: 7.0
+      env: PHALCON_VERSION="3.2.x" SLAYER_VERSION="dev"
+    - php: 7.0
+      env: PHALCON_VERSION="3.1.x" SLAYER_VERSION="dev"
+    - php: 7.0
+      env: PHALCON_VERSION="3.0.x" SLAYER_VERSION="dev"
+
+    # PHP7.1
+    # - php: 7.1
+    #   env: PHALCON_VERSION="3.2.x" SLAYER_VERSION="dev"
+    # - php: 7.1
+    #   env: PHALCON_VERSION="3.1.x" SLAYER_VERSION="dev"
+    # - php: 7.1
+    #   env: PHALCON_VERSION="3.0.x" SLAYER_VERSION="dev"
+
+env:
+  global:
+    - SLAYER_FOLDER=slayer-dist
+
+    # built-in web
+    - SERVE_HOST="0.0.0.0"
+    - SERVE_PORT="8080"
+
+    # mail settings
+    - MAIL_ADAPTER="mailgun"
+    - MAILER_MAIL_FROM="Solid Layer - TravisCI <postmaster@sandboxa6c86c16840d4756826185daa128e64d.mailgun.org>"
+
+    # mailgun settings
+    - MAILER_MAILGUN_DOMAIN="sandboxa6c86c16840d4756826185daa128e64d.mailgun.org"
+    # secret key
+    - secure: "JaqOj6ozbf1xU/I9ZYvljAmL2ttgC7DKShC7lPwrIe7IZnntYX3t5vpzhEhU4Ymt6uB4E/YYfwr15Yn/yl4hJUj6hzrjQsH8O7AmJv3aCFzIb+WpbWkJ7XdBQzaVXg7mbJpsL/TBZy4/hqYOw0DR542xGcAo5Z84wEZ/W9sei/pvIwTg+rIqA3XPh9vgvUi36xV6/O3n5FBZcK+3U8hwVFqUU8Say99kZOYwc934hhyoA9K4Px8MG7XeC8zl/B3pDHBDyvQ2eU0dUrb2zMx2LhByRGQ4tcERLJslShscb0a/32I3Jk/aesgArt2d0ZaEmanixsfm9lswOgoO/YZkci0n5Lto3/w6PJsko+3jJ7P1ND9BrK+lY5BKRC0Qkt3U8EsrSpjgobGzdXztZo+ZXWD7s2RClQKLI7jjMqW4k/1sO5rQ/50jzEtLoX5jZs5r6OrR6BEN0J4tI7b74sVeqYIoSzuX6eJGCbT7dcRIdNcz1jrvhcmbZ9YLxpHOp8PE2uKISJrUtuioOIjv6j6bRxy1gOcglZlRhv5N/xikCQmmgLgrMvwkaaLSjo5oe81ETX+/VIH/6cMI+qIvKtmOewLes6FszbCKQs/jyWPLQZjAlf9ZJmCspwWvNbIwSBpzRCW95VAhfHhgQZ6tPNCl3LqIDBHVGD4TpLlIg+wKYEU="
+
+cache:
+  directories:
+    - ~/.composer/cache
+    - ~/cphalcon
+
+before_install:
+  # beanstald installation
+    - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/beanstalkd.sh | bash
+
+before_script:
+  - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/build.sh | bash
+
+script:
+  - cd ~/${SLAYER_FOLDER}
+
+  # call queue:listen
+  - php brood queue:listen > queue-worker.log 2>&1 &
+
+  # phpunit
+  - chmod a+x ./vendor/bin/phpunit
+  - chmod a+x ./vendor/phalconslayer/framework/phpunit.xml
+  - ./vendor/bin/phpunit -c ./vendor/phalconslayer/framework/phpunit.xml
+  - cat queue-worker.log
+  - cat internal-server.log
+
+  # call brood console commands
+  - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/script.sh | bash
+
+# branches:
+#   only:
+#     - master
