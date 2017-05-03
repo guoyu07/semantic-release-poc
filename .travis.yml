@@ -59,6 +59,7 @@ before_install:
     - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/beanstalkd.sh | bash
 
 before_script:
+  - rm composer.lock
   - composer require phalconslayer/framework:dev-${TRAVIS_BRANCH}
   - composer require techpivot/phalcon-ci-installer:~1.0
   - composer update
