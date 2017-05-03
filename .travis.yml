@@ -86,8 +86,11 @@ script:
 
   # call brood console commands
   - curl -s https://raw.githubusercontent.com/phalconslayer/framework/1.4/build/ci/script.sh | bash
-before_deploy:
-  - curl -s https://raw.githubusercontent.com/cyberhck/semantic-release-poc/${TRAVIS_BRANCH}/.docker/release/semantic-release.sh | bash
+deploy:
+  provider: script
+  script: ./.docker/release/semantic-release.sh
+  on:
+    branch: master
 # branches:
 #   only:
 #     - master
