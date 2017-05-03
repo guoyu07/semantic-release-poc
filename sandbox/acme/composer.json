@@ -1,0 +1,8 @@
+{
+    "name": "phalconslayer/acme",
+    "autoload": {
+        "psr-4": {
+            "Acme\\Acme\\": "src/"
+        }
+    }
+}
