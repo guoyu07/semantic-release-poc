@@ -10,19 +10,19 @@ matrix:
 
     # PHP5.6
     - php: 5.6
-      env: PHALCON_VERSION="3.2.x" SLAYER_VERSION="dev"
+      env: PHALCON_VERSION="3.2.x" SLAYER_VERSION="master"
     - php: 5.6
-      env: PHALCON_VERSION="3.1.x" SLAYER_VERSION="dev"
+      env: PHALCON_VERSION="3.1.x" SLAYER_VERSION="master"
     - php: 5.6
-      env: PHALCON_VERSION="3.0.x" SLAYER_VERSION="dev"
+      env: PHALCON_VERSION="3.0.x" SLAYER_VERSION="master"
 
     # PHP7.0
     - php: 7.0
-      env: PHALCON_VERSION="3.2.x" SLAYER_VERSION="dev"
+      env: PHALCON_VERSION="3.2.x" SLAYER_VERSION="master"
     - php: 7.0
-      env: PHALCON_VERSION="3.1.x" SLAYER_VERSION="dev"
+      env: PHALCON_VERSION="3.1.x" SLAYER_VERSION="master"
     - php: 7.0
-      env: PHALCON_VERSION="3.0.x" SLAYER_VERSION="dev"
+      env: PHALCON_VERSION="3.0.x" SLAYER_VERSION="master"
 
     # PHP7.1
     # - php: 7.1
@@ -69,7 +69,6 @@ before_script:
   - mkdir config/travis
   - vendor/bin/install-phalcon.sh ${PHALCON_VERSION}
   - mysql -e 'create database slayer charset=utf8mb4 collate=utf8mb4_unicode_ci;'
-  - mysql -e 'show databases'
   - php brood db:migrate
   - php -S ${SERVE_HOST}:${SERVE_PORT} -t public/ > internal-server.log 2>&1 &
   - sleep 5
