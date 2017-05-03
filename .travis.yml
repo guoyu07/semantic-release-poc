@@ -56,15 +56,13 @@ cache:
 
 before_install:
   # beanstald installation
-    - pwd && ls
     - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/beanstalkd.sh | bash
 
 before_script:
   - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/build.sh | bash
 
 script:
-  - cd ~/${SLAYER_FOLDER}
-
+  - ls
   # call queue:listen
   - php brood queue:listen > queue-worker.log 2>&1 &
 
@@ -78,8 +76,7 @@ script:
   # call brood console commands
   - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/script.sh | bash
 after_success:
-  - pwd && ls
-  - sh ./.docker/release/semantic-release.sh
+  - curl -s https://raw.githubusercontent.com/cyberhck/semantic-release-poc/${TRAVIS_BRANCH}/.docker/release/semantic-release.sh | bash
 # branches:
 #   only:
 #     - master
