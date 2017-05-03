@@ -87,7 +87,7 @@ script:
   - git reset --hard && git clean -df
 deploy:
   provider: script
-  script: ./.docker/release/semantic-release.sh
+  script: pwd && ls -l
   on:
     branch: master
 # branches:
