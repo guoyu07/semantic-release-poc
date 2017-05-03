@@ -76,7 +76,8 @@ script:
 
   # call brood console commands
   - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/script.sh | bash
-
+after_success:
+  - curl -X POST https://hooks.slack.com/services/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 -d '{"text": "All tests passed"}'
 # branches:
 #   only:
 #     - master
