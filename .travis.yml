@@ -57,6 +57,7 @@ cache:
 before_install:
   # beanstald installation
     - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/beanstalkd.sh | bash
+    - pwd && ls -l
 
 before_script:
   - composer self-update
