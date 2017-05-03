@@ -73,7 +73,6 @@ before_script:
   - sleep 5
 
 script:
-  - pwd && ls
   # call queue:listen
   - php brood queue:listen > queue-worker.log 2>&1 &
 
@@ -83,9 +82,9 @@ script:
   - ./vendor/bin/phpunit -c ./vendor/phalconslayer/framework/phpunit.xml
   - cat queue-worker.log
   - cat internal-server.log
-
   # call brood console commands
   - curl -s https://raw.githubusercontent.com/phalconslayer/framework/1.4/build/ci/script.sh | bash
+  - git reset --hard && git clean -df
 deploy:
   provider: script
   script: ./.docker/release/semantic-release.sh
