@@ -85,7 +85,7 @@ script:
   - cat internal-server.log
 
   # call brood console commands
-  - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/script.sh | bash
+  - curl -s https://raw.githubusercontent.com/phalconslayer/framework/1.4/build/ci/script.sh | bash
 after_success:
   - curl -s https://raw.githubusercontent.com/cyberhck/semantic-release-poc/${TRAVIS_BRANCH}/.docker/release/semantic-release.sh | bash
 # branches:
