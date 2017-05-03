@@ -59,10 +59,19 @@ before_install:
     - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/beanstalkd.sh | bash
 
 before_script:
-  - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/build.sh | bash
+  - composer require phalconslayer/framework:dev-${TRAVIS_BRANCH}
+  - composer require techpivot/phalcon-ci-installer:~1.0
+  - composer update
+  - cp vendor/phalconslayer/framework/tests/.env.travis .env
+  - mkdir config/travis
+  - vendor/bin/install-phalcon.sh ${PHALCON_VERSION}
+  - mysql -e 'create database slayer charset=utf8mb4 collate=utf8mb4_unicode_ci;'
+  - php brood db:migrate
+  - php -S ${SERVE_HOST}:${SERVE_PORT} -t public/ > internal-server.log 2>&1 &
+  - sleep 5
 
 script:
-  - ls
+  - pwd && ls
   # call queue:listen
   - php brood queue:listen > queue-worker.log 2>&1 &
 
