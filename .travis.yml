@@ -57,7 +57,6 @@ cache:
 before_install:
   # beanstald installation
     - curl -s https://raw.githubusercontent.com/phalconslayer/framework/${TRAVIS_BRANCH}/build/ci/beanstalkd.sh | bash
-    - pwd && ls -l
 
 before_script:
   - composer self-update
@@ -88,7 +87,7 @@ script:
   - git reset --hard && git clean -df
 deploy:
   provider: script
-  script: pwd && ls -al
+  script: pwd && ls -al .docker
   on:
     branch: master
 # branches:
