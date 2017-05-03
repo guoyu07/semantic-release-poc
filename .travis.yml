@@ -60,17 +60,16 @@ before_install:
 
 before_script:
   - composer self-update
+  - composer global require hirak/prestissimo
   - rm composer.lock
-  - pwd && ls -al && ls sandbox/acme
   - composer require phalconslayer/framework:dev-${TRAVIS_BRANCH}
   - composer require techpivot/phalcon-ci-installer:~1.0
-  - ls -l
-  - ls sandbox/acme
   - composer update
   - cp vendor/phalconslayer/framework/tests/.env.travis .env
   - mkdir config/travis
   - vendor/bin/install-phalcon.sh ${PHALCON_VERSION}
   - mysql -e 'create database slayer charset=utf8mb4 collate=utf8mb4_unicode_ci;'
+  - mysql -e 'show databases'
   - php brood db:migrate
   - php -S ${SERVE_HOST}:${SERVE_PORT} -t public/ > internal-server.log 2>&1 &
   - sleep 5
