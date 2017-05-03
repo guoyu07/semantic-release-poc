@@ -85,11 +85,8 @@ script:
   # call brood console commands
   - curl -s https://raw.githubusercontent.com/phalconslayer/framework/1.4/build/ci/script.sh | bash
   - git reset --hard && git clean -df
-deploy:
-  provider: script
-  script: sh .docker/release/semantic-release.sh
-  on:
-    branch: master
+after_success:
+  - sh .docker/release/semantic-release.sh
 # branches:
 #   only:
 #     - master
