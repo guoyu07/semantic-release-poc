@@ -60,9 +60,8 @@ before_install:
 
 before_script:
   - composer self-update
-  - composer global require hirak/prestissimo
   - rm composer.lock
-  - composer require phalconslayer/framework:dev-${TRAVIS_BRANCH}
+  - composer require phalconslayer/framework:1.4.x-dev
   - composer require techpivot/phalcon-ci-installer:~1.0
   - composer update
   - cp vendor/phalconslayer/framework/tests/.env.travis .env
