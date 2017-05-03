@@ -61,6 +61,7 @@ before_install:
 before_script:
   - composer self-update
   - rm composer.lock
+  - pwd && ls -al && ls sandbox/acme
   - composer require phalconslayer/framework:dev-${TRAVIS_BRANCH}
   - composer require techpivot/phalcon-ci-installer:~1.0
   - ls -l
