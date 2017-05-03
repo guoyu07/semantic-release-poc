@@ -22,7 +22,7 @@ matrix:
     - php: 7.0
       env: PHALCON_VERSION="3.1.x" SLAYER_VERSION="master"
     - php: 7.0
-      env: PHALCON_VERSION="3.0.x" SLAYER_VERSION="master" DO_PUBLISH=true
+      env: PHALCON_VERSION="3.0.x" SLAYER_VERSION="master"
 
     # PHP7.1
     # - php: 7.1
